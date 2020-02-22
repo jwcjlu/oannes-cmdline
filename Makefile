@@ -21,7 +21,7 @@ endif
 endif
 
 all: *.go
-	@GO111MODULE=on go build -o oann main.go
+	@GO111MODULE=on go build -o oannes main.go
 
 .PHONY: clean
 .PHONY: install
@@ -30,29 +30,29 @@ all: *.go
 install:
 ifeq ($(user),root)
 #root, install for all user
-	@cp ./oann /usr/bin
-	@[ -d /etc/oann ] || mkdir /etc/oann
-	@cp -rf ./install/* /etc/oann/
+	@cp ./oannes /usr/bin
+	@[ -d /etc/oannes ] || mkdir /etc/oannes
+	@cp -rf ./install/* /etc/oannes/
 else
 #!root, install for current user
-	$(shell if [ -z $(BIN) ]; then read -p "Please select installdir: " REPLY; mkdir -p $${REPLY}; cp ./oann $${REPLY}/; else mkdir -p $(BIN); cp ./oann $(BIN); fi)
-	@[ -d ~/.oann ] || mkdir ~/.oann
-	@cp -rf ./install/* ~/.oann/
+	$(shell if [ -z $(BIN) ]; then read -p "Please select installdir: " REPLY; mkdir -p $${REPLY}; cp ./oannes $${REPLY}/; else mkdir -p $(BIN); cp ./oannes $(BIN); fi)
+	@[ -d ~/.oannes ] || mkdir ~/.oannes
+	@cp -rf ./install/* ~/.oannes/
 endif
 	@echo "install finished"
 
 uninstall:
 ifeq ($(user),root)
 #root, install for all user
-	@rm -f /usr/bin/oann &> /dev/null
-	@rm -rf /etc/oann &>/dev/null
+	@rm -f /usr/bin/oannes &> /dev/null
+	@rm -rf /etc/oannes &>/dev/null
 else
 #!root, install for current user
-	$(shell for i in `which -a oann | grep -v '/usr/bin/oann' 2>/dev/null | sort | uniq`; do read -p "Press to remove $${i} (y/n): " REPLY; if [ $${REPLY} = "y" ]; then rm -f $${i}; fi; done)
-	@rm -rf ~/.oann &>/dev/null
+	$(shell for i in `which -a oannes | grep -v '/usr/bin/oannes' 2>/dev/null | sort | uniq`; do read -p "Press to remove $${i} (y/n): " REPLY; if [ $${REPLY} = "y" ]; then rm -f $${i}; fi; done)
+	@rm -rf ~/.oannes &>/dev/null
 endif
 	@echo "uninstall finished"
 
 clean:
-	@rm -f ./oann
+	@rm -f ./oannes
 	@echo "clean finished"
